@@ -8,12 +8,17 @@ import (
 	"github.com/labstack/echo/v4"
 )
 
-// Get all employees
 func GetEmployees(c echo.Context) error {
 	var employees []models.Employee
-	if err := database.DB.Find(&employees).Error; err != nil {
+
+	// Make Sure Preload Department and Position
+	if err := database.DB.
+		Preload("Department").
+		Preload("Position").
+		Find(&employees).Error; err != nil {
 		return c.JSON(http.StatusInternalServerError, map[string]string{"error": err.Error()})
 	}
+
 	return c.JSON(http.StatusOK, employees)
 }
 
@@ -39,4 +44,3 @@ func DeleteEmployee(c echo.Context) error {
 	}
 	return c.JSON(http.StatusOK, map[string]string{"message": "Employee deleted successfully"})
 }
-	

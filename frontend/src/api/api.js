@@ -9,3 +9,9 @@ export const fetchFinancials = async () => {
   const res = await fetch(`${API_URL}/financials`);
   return res.json();
 };
+
+// Fetch data budgets
+const fetchBudgets = async () => {
+  const res = await fetch(`${API_URL}/budgets`);
+  return res.json();
+};
